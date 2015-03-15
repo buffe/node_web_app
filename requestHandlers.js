@@ -1,18 +1,20 @@
 var exec = require("child_process").exec;
 
-function start(){
+function start(response){
 	console.log("Request handler 'start' was called.");
-
-	function sleep(milis){
-		var startTime = new Date().getTime();
-		while(new Date().getTime() < startTime + milis);
-	}
-
-sleep(10000);
+	
+	exec("ls -lah", function(error, stdout, stderr){
+		response.writeHead(200, {"Content-type": "text/plain"});
+		response.write(stdout);
+		response.end();
+	});
 }
 
-function upload(){
+function upload(response){
 	console.log("Request hander 'upload' was called.");
+	response.writeHead(200, {"Content-type": "text/plain"});
+                response.write("Hello Upload");
+                response.end();	
 }
 
 exports.start = start;
